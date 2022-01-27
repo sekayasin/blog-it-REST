@@ -1,4 +1,4 @@
-package com.example.authenticationauthorizationservice;
+package com.example.authenticationauthorizationservice.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

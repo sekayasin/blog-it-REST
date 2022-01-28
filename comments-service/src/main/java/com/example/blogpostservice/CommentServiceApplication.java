@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories
-public class BlogPostServiceApplication {
+public class CommentServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BlogPostServiceApplication.class, args);
+        SpringApplication.run(CommentServiceApplication.class, args);
     }
 
     @Bean

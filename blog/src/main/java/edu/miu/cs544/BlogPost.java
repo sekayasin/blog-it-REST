@@ -1,4 +1,4 @@
-package edu.miu.cs544.blog;
+package edu.miu.cs544;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

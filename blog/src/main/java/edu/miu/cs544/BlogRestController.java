@@ -13,14 +13,21 @@ public class BlogRestController {
     @Autowired
     private BlogService blogService;
 
+
+
     @GetMapping(path = "/blogs")
     public List<BlogPost> getBlogs() {
         return blogService.getBlogs();
     }
 
+//    @GetMapping(path = "/blogs/{id}")
+//    public BlogPost getBlogById(@PathVariable Long id) {
+//        return blogService.getBlogById(id);
+//    }
+
     @GetMapping(path = "/blogs/{id}")
-    public BlogPost getBlogById(@PathVariable Long id) {
-        return blogService.getBlogById(id);
+    public BlogPostResponse getFullBlogById(@PathVariable Long id) {
+        return blogService.getFullBlogPostById(id);
     }
 
     @PostMapping(path = "/blogs")
@@ -33,6 +40,8 @@ public class BlogRestController {
     public void deleteStudent(@PathVariable("id") Long id){
         blogService.deleteBlog(id);
     }
+
+
 
 
 }

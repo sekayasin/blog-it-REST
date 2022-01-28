@@ -2,6 +2,8 @@ package com.example.authenticationauthorizationservice.filters;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.authenticationauthorizationservice.domain.AppUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 
@@ -30,13 +36,23 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        log.info("Username is: {}",username);
-        log.info("password is: {}",password);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            AppUser appUser = objectMapper.readValue(request.getReader(),AppUser.class);
+            log.info("Username is::: {}",appUser);
+                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(appUser.getUsername(),appUser.getPassword());
         return authenticationManager.authenticate(authenticationToken);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        String username = request.getParameter("username");
+//        String password = request.getParameter("password");
+//        log.info("Username is::: {}",username);
+//        log.info("password is::: {}",password);
+
+        return null;
+
+
     }
 
     @Override
@@ -55,7 +71,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withExpiresAt(new Date(System.currentTimeMillis()+30*60*1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-        response.setHeader("access_token",access_token);
-        response.setHeader("refresh_token",refresh_token);
+//        response.setHeader("access_token",access_token);
+//        response.setHeader("refresh_token",refresh_token);
+
+        Map<String, String> tokens = new HashMap<>();
+
+        tokens.put("access_token",access_token);
+        tokens.put("refresh_token",refresh_token);
+
+        response.setContentType(APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+
     }
 }

@@ -1,4 +1,4 @@
-package edu.miu.cs544.blog;
+package edu.miu.cs544;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

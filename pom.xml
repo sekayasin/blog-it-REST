@@ -64,11 +64,24 @@
       <artifactId>spring-security-taglibs</artifactId>
     </dependency>
 
+    <!-- Hibernate -->
+<!--    <dependency>-->
+<!--      <groupId>org.hibernate</groupId>-->
+<!--      <artifactId>hibernate-core</artifactId>-->
+<!--      <version>5.6.3.Final</version>-->
+<!--    </dependency>-->
+
     <!-- needed for Postgresql -->
+<!--    <dependency>-->
+<!--      <groupId>org.postgresql</groupId>-->
+<!--      <artifactId>postgresql</artifactId>-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
+
+    <!-- needed for MariaDB -->
     <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <scope>runtime</scope>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
     </dependency>
     
   </dependencies>

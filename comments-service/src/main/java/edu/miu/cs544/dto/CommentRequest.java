@@ -1,4 +1,4 @@
-package com.example.blogpostservice.dto;
+package edu.miu.cs544.dto;
 
 import lombok.Data;
 

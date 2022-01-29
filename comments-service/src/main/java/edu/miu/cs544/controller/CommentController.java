@@ -1,10 +1,13 @@
-package com.example.blogpostservice.controller;
+package edu.miu.cs544.controller;
 
-import com.example.blogpostservice.dto.CommentRequest;
-import com.example.blogpostservice.model.Comment;
-import com.example.blogpostservice.service.CommentService;
+import edu.miu.cs544.dto.CommentRequest;
+import edu.miu.cs544.model.Comment;
+import edu.miu.cs544.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -24,19 +27,20 @@ public class CommentController {
         return commentService.getAll();
     }
     @GetMapping("{id}")
-    public Comment getPost(@PathVariable("id") long id){
-        return commentService.get(id);
+
+    public ResponseEntity<Comment> getPost(@PathVariable("id") long id){
+        return new ResponseEntity<>(commentService.get(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public String createPost(@RequestBody CommentRequest commentRequest){
+    public RedirectView createPost(@RequestBody CommentRequest commentRequest){
         Long id = commentService.add(commentRequest);
-        return "redirect:/comments/"+id;
+        return new RedirectView("redirect:/comments/"+id);
     }
     @PutMapping
-    public String updateComment(@PathVariable("id") long id, @RequestBody CommentRequest commentRequest){
+    public RedirectView updateComment(@PathVariable("id") long id, @RequestBody CommentRequest commentRequest){
         commentService.update(id, commentRequest);
-        return "redirect:/comments/"+id;
+        return new RedirectView("redirect:/comments/"+id);
     }
     @DeleteMapping
     public void deleteComment(@PathVariable("id") long id){

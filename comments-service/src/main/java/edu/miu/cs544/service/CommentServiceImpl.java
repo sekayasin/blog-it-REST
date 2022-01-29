@@ -1,8 +1,8 @@
-package com.example.blogpostservice.service;
+package edu.miu.cs544.service;
 
-import com.example.blogpostservice.dao.CommentDao;
-import com.example.blogpostservice.dto.CommentRequest;
-import com.example.blogpostservice.model.Comment;
+import edu.miu.cs544.dao.CommentDao;
+import edu.miu.cs544.dto.CommentRequest;
+import edu.miu.cs544.model.Comment;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

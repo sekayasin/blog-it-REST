@@ -10,6 +10,6 @@ import java.util.List;
 public interface CommentDao extends JpaRepository<Comment, Long> {
     @Override
     Comment getById(Long aLong);
-    List<Comment> getCommentByUser(Long id);
     List<Comment> getCommentByPost(Long id);
-}
+    void deleteCommentByPost(Long id);
+ }

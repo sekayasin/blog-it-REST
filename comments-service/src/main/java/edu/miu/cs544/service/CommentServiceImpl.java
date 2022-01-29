@@ -2,6 +2,7 @@ package edu.miu.cs544.service;
 
 import edu.miu.cs544.dao.CommentDao;
 import edu.miu.cs544.dto.CommentRequest;
+import edu.miu.cs544.dto.CommentUpdate;
 import edu.miu.cs544.model.Comment;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,19 +45,24 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Long update(Long id, CommentRequest postReq) {
-        if(postDao.existsById(id))
+    public Long update(Long id, CommentUpdate updateReq) {
+        if(!postDao.existsById(id))
             throw new IllegalStateException();
-        Comment comment = modelMapper.map(postReq, Comment.class);
-        comment.setId(id);
+        Comment comment = postDao.getById(id);
+        comment.setContent(updateReq.getContent());
         postDao.save(comment);
         return id;
     }
 
     @Override
     public void delete(Long id) {
-        if(postDao.existsById(id))
+        if(!postDao.existsById(id))
             throw new IllegalStateException();
         postDao.deleteById(id);
+    }
+
+    @Override
+    public void deletePostComments(Long id){
+        postDao.deleteCommentByPost(id);
     }
 }

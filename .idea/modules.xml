@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/blog-it-REST.iml" filepath="$PROJECT_DIR$/.idea/blog-it-REST.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ApiGateway/ApiGateway.iml" filepath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Blog-it.iml" filepath="$PROJECT_DIR$/../Blog-it.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DiscoveryServer/DiscoveryServer.iml" filepath="$PROJECT_DIR$/DiscoveryServer/DiscoveryServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authentication-authorization-service/authentication-authorization-service.iml" filepath="$PROJECT_DIR$/authentication-authorization-service/authentication-authorization-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blog/blog.iml" filepath="$PROJECT_DIR$/blog/blog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/comments-service/comments-service.iml" filepath="$PROJECT_DIR$/comments-service/comments-service.iml" />
     </modules>
   </component>
 </project>

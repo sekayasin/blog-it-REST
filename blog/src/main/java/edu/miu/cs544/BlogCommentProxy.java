@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @FeignClient(name = "BlogComment-Service", url = "localhost:8081")
+//@FeignClient(name = "Blog-Comment-Service", url = "blog-comment-service:8081")
 public interface BlogCommentProxy {
-    @GetMapping("/comments/posts/{id}")
+    @GetMapping("/api/v1/comments/posts/{id}")
     public List<CommentResponse> getPostComments(@PathVariable("id") long postId);
 
 }

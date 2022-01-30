@@ -13,7 +13,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -41,6 +41,10 @@ target/
 
 # mac
 .DS_Store
+
+
+### .env ###
+.env
 
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml

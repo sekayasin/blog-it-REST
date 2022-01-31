@@ -10,6 +10,9 @@ import com.example.authenticationauthorizationservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
@@ -33,6 +36,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -45,6 +49,30 @@ public class UserController {
     public ResponseEntity<AppUser> registerUser(@RequestBody AppUser appUser) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/users/register").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(appUser));
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<Object> getUser(@RequestHeader HttpHeaders headers) throws IOException {
+
+        if (headers.containsKey(AUTHORIZATION) && headers.get(AUTHORIZATION).get(0).startsWith("Bearer ")) {
+            try {
+                String refresh_token = headers.get(AUTHORIZATION).get(0).substring("Bearer ".length());
+                Algorithm algorithm = Algorithm.HMAC256("secrete".getBytes(StandardCharsets.UTF_8));
+                JWTVerifier verifier = JWT.require(algorithm).build();
+                DecodedJWT decodedJWT = verifier.verify(refresh_token);
+                String username = decodedJWT.getSubject();
+                AppUser user = userService.getUser(username);
+                log.info("Userss, {}", user);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } catch (Exception exception) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error_message", exception.getMessage());
+                return new ResponseEntity<>(error, FORBIDDEN);
+            }
+
+
+        }
+        return new ResponseEntity<>(FORBIDDEN);
     }
 
     @PostMapping("/users/role/register")

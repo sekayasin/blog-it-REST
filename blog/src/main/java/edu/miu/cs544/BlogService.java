@@ -1,14 +1,11 @@
 package edu.miu.cs544;
 
-import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
@@ -20,7 +17,7 @@ public class BlogService {
     @Autowired
     private ModelMapper modelMapper;
 
-//    @Autowired
+    @Autowired
     private BlogCommentProxy blogCommentProxy;
     @Autowired
     private UserAuthProxy userAuthProxy;
@@ -50,6 +47,18 @@ public class BlogService {
     }
 
     public void addBlogPost(BlogPost blogPost) {
+        blogDao.save(blogPost);
+    }
+
+    @Transactional
+    public void updateBlogPost(Long id, BlogPostUpdate blogPostUpdate) {
+        boolean exists = blogDao.existsById(id);
+        if (!exists) {
+            throw new IllegalStateException("BlogPost with id " + id + " does not exist");
+        }
+        BlogPost blogPost = blogDao.getById(id);
+        blogPost.setTitle(blogPostUpdate.getTitle());
+        blogPost.setContent(blogPostUpdate.getContent());
         blogDao.save(blogPost);
     }
 

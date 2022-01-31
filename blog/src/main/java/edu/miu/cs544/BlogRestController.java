@@ -54,6 +54,11 @@ public class BlogRestController {
 
     }
 
+    @PutMapping(path = "/blogs/{id}")
+    public void updateBlogPost(@PathVariable("id") Long id, @RequestBody BlogPostUpdate blogPostUpdate) {
+        blogService.updateBlogPost(id, blogPostUpdate);
+    }
+
     @DeleteMapping(path = "/blogs/{id}")
     public void deleteStudent(@PathVariable("id") Long id){
         blogService.deleteBlog(id);

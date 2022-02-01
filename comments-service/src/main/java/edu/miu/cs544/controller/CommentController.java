@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public RedirectView createPost(@RequestBody CommentRequest commentRequest){
+    public RedirectView createPost(@RequestBody @Valid CommentRequest commentRequest){
         Long id = commentService.add(commentRequest);
         return new RedirectView("/api/v1/comments/"+id);
     }
@@ -47,7 +48,7 @@ public class CommentController {
         return new RedirectView("/api/v1/comments/"+id);
     }
     @DeleteMapping("{id}")
-    public void deleteComment(@PathVariable("id") long id){
+    public void deleteComment(@PathVariable("id")  long id){
         commentService.delete(id);
     }
 

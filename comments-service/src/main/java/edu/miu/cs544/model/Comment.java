@@ -3,6 +3,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Data
@@ -13,7 +15,6 @@ public class Comment extends Auditable{
     private Long id;
     @Lob
     private String content;
-
     private Long post;
     private Long user;
 }

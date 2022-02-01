@@ -55,8 +55,9 @@ public class BlogRestController {
     }
 
     @PutMapping(path = "/blogs/{id}")
-    public void updateBlogPost(@PathVariable("id") Long id, @RequestBody BlogPostUpdate blogPostUpdate) {
+    public RedirectView updateBlogPost(@PathVariable("id") Long id, @RequestBody BlogPostUpdate blogPostUpdate) {
         blogService.updateBlogPost(id, blogPostUpdate);
+        return new RedirectView("/api/v1/blogs/" + id);
     }
 
     @DeleteMapping(path = "/blogs/{id}")

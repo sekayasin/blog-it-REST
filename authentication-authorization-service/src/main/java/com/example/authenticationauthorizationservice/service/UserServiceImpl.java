@@ -2,6 +2,7 @@ package com.example.authenticationauthorizationservice.service;
 
 import com.example.authenticationauthorizationservice.domain.AppUser;
 import com.example.authenticationauthorizationservice.domain.Role;
+import com.example.authenticationauthorizationservice.domain.RoleToUserForm;
 import com.example.authenticationauthorizationservice.repository.AppUserRepository;
 import com.example.authenticationauthorizationservice.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public AppUser saveUser(AppUser appUser) {
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-        return appUserRepository.save(appUser);
+        log.info("User saving, {}",appUser);
+        appUserRepository.save(appUser);
+        return appUser;
     }
 
     @Override
@@ -59,11 +62,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void addRoleToUser(String username, String roleName) {
+    public RoleToUserForm addRoleToUser(String username, String roleName) {
 
         AppUser appUser = appUserRepository.findByUsername(username);
         Role role = roleRepository.findByName(roleName);
         appUser.getRole().add(role);
+
+        return RoleToUserForm.builder().username(username).roleName(roleName).build();
     }
 
     @Override
